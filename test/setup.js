@@ -1,9 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import MockAsyncStorage from 'mock-async-storage';
 import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({adapter: new Adapter()});
+
+const mockImpl = new MockAsyncStorage();
+jest.mock('@react-native-community/async-storage', () => mockImpl);
+global.window = {};
 
 /* eslint-disable no-console */
 
@@ -39,6 +44,7 @@ jest.mock('react-native-device-info', () => {
         getBuildNumber: () => '0',
         getModel: () => 'iPhone X',
         isTablet: () => false,
+        getDeviceLocale: () => 'en-US',
     };
 });
 
